@@ -53,6 +53,15 @@
               {{ post.tags?.[0] || 'General' }}
             </span>
           </div>
+          <!-- Add reactions display here -->
+          <div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
+            <span>
+              👍 {{ post.reactions?.likes ?? 0 }}
+            </span>
+            <span>
+              👎 {{ post.reactions?.dislikes ?? 0 }}
+            </span>
+          </div>
         </div>
       </router-link>
     </div>
