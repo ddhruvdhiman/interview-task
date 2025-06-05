@@ -18,7 +18,7 @@ const post = ref(null)
 const route = useRoute()
 
 onMounted(async () => {
-  const res = await axios.get(`https://jsonplaceholder.typicode.com/posts/${route.params.id}`)
+  const res = await axios.get(`https://dummyjson.com/posts/${route.params.id}`)
   post.value = res.data
 })
 </script>
