@@ -41,11 +41,6 @@
             <span class="space">{{ post.title }}</span>
           </template>
           <div class="flex items-center gap-3 mb-2">
-            <span
-              class="inline-block bg-gradient-to-r from-teal-400 to-teal-600 text-white text-xs px-3 py-1 rounded-full font-semibold shadow"
-            >
-              {{ post.tags?.[0] || 'General' }}
-            </span>
           </div>
           <p class="text-gray-700 mb-6 text-base leading-relaxed line-clamp-4">
             {{ post.body }}
