@@ -25,44 +25,51 @@
         ></path>
       </svg>
     </div>
-    <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+    <div v-else class="grid grid-cols-2 gap-8">
       <router-link
         v-for="post in store.posts"
         :key="post.id"
         :to="`/posts/${post.id}`"
         class="block transform transition hover:scale-[1.03] hover:shadow-2xl"
       >
-        <div
-          class="bg-gray-100 rounded-2xl shadow-lg p-6 h-full flex flex-col justify-between border border-gray-100 hover:border-blue-400 transition"
+        <el-card
+          :header="post.title"
+          class="rounded-xl shadow-xl border-0 bg-gray-50 hover:bg-gray-100 transition-all duration-300 h-full flex flex-col justify-between premium-card"
         >
-          <div>
-            <h2
-              class="text-xl font-semibold mb-2 text-blue-700 line-clamp-2"
-            >
-              {{ post.title }}
-            </h2>
-            <p class="text-gray-600 mb-4 line-clamp-3">
-              {{ post.body }}
-            </p>
-          </div>
-          <div class="flex items-center justify-between mt-4">
-            <span class="text-xs text-gray-400">Post #{{ post.id }}</span>
+          <div class="flex items-center gap-3 mb-2">
+            <!-- Remove title from here, keep only the tag badge -->
             <span
-              class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full font-medium"
+              class="inline-block bg-gradient-to-r from-blue-400 to-blue-600 text-white text-xs px-3 py-1 rounded-full font-semibold shadow"
             >
               {{ post.tags?.[0] || 'General' }}
             </span>
           </div>
-          <!-- Add reactions display here -->
-          <div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
-            <span>
-              👍 {{ post.reactions?.likes ?? 0 }}
-            </span>
-            <span>
-              👎 {{ post.reactions?.dislikes ?? 0 }}
+          <p class="text-gray-700 mb-6 text-base leading-relaxed line-clamp-4">
+            {{ post.body }}
+          </p>
+          <div class="flex items-center justify-between mt-auto pt-4 border-t border-blue-100">
+            <div class="flex items-center gap-4 text-xs text-gray-500">
+              <span class="flex items-center gap-1">
+                <span class="inline-block w-5 h-5 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shadow-sm">
+                  👍
+                </span>
+                <span class="font-semibold">{{ post.reactions?.likes ?? 0 }}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="inline-block w-5 h-5 bg-red-100 text-red-500 rounded-full flex items-center justify-center shadow-sm">
+                  👎
+                </span>
+                <span class="font-semibold">{{ post.reactions?.dislikes ?? 0 }}</span>
+              </span>
+            </div>
+            <span class="text-xs text-gray-400 font-mono">#{{ post.id }}</span>
+            <span
+              class="ml-2 inline-block px-3 py-1 bg-blue-500 text-white rounded-lg font-medium text-xs shadow hover:bg-blue-600 transition"
+              >
+              Read More
             </span>
           </div>
-        </div>
+        </el-card>
       </router-link>
     </div>
   </div>
@@ -71,7 +78,8 @@
 <script setup>
 import { onMounted } from 'vue'
 import { usePostStore } from '../stores/postStore'
-import PostCard from '../components/PostCard.vue'
+import { ElCard } from 'element-plus'
+import 'element-plus/es/components/card/style/css'
 
 const store = usePostStore()
 
@@ -89,3 +97,21 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style scoped>
+.premium-card {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10), 0 1.5px 4px 0 rgba(0,0,0,0.04);
+  border: 1.5px solid rgba(30, 64, 175, 0.08);
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+.premium-card:hover {
+  box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.18), 0 4px 12px 0 rgba(0,0,0,0.08);
+  border-color: #3b82f6;
+}
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>
